@@ -3,6 +3,8 @@ package com.example.composeweather.features.screens
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.unit.dp
@@ -36,7 +38,8 @@ fun MainScaffold(weatherResponse: WeatherResponse,
                  navController: NavHostController){
         Scaffold(topBar = {
                 WeatherAppBar("London",navController = navController,
-                elevation = 5.dp)
+                        icon = Icons.Default.ArrowBack,
+                elevation = 3.dp)
         }) {
                 MainContent(data = weatherResponse)
         }
