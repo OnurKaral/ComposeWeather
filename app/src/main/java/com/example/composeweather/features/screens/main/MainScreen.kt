@@ -1,12 +1,15 @@
 package com.example.composeweather.features.screens
 
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.composeweather.data.DataOrException
+import com.example.composeweather.features.common.widgets.WeatherAppBar
 import com.example.composeweather.features.screens.main.MainScreenViewModel
 import com.example.composeweather.model.WeatherResponse
 
@@ -15,11 +18,6 @@ import com.example.composeweather.model.WeatherResponse
 fun MainScreen(
         navController: NavHostController,
         mainScreenViewModel: MainScreenViewModel = hiltViewModel()) {
-       ShowData(mainScreenViewModel)
-}
-
-@Composable
-fun ShowData(mainScreenViewModel: MainScreenViewModel){
         val weatherData =produceState<DataOrException<WeatherResponse,Boolean,Exception>>(
                 initialValue =DataOrException(isLoading = true)){
                 value = mainScreenViewModel.getWeatherData("London")
@@ -28,8 +26,23 @@ fun ShowData(mainScreenViewModel: MainScreenViewModel){
         if(weatherData.isLoading == true){
                 CircularProgressIndicator()
         }else if(weatherData.data != null){
-                Text(text = weatherData.data.weather.get(0).description)
+                MainScaffold(weatherResponse = weatherData.data,navController)
+
         }
+}
 
+@Composable
+fun MainScaffold(weatherResponse: WeatherResponse,
+                 navController: NavHostController){
+        Scaffold(topBar = {
+                WeatherAppBar("London",navController = navController,
+                elevation = 5.dp)
+        }) {
+                MainContent(data = weatherResponse)
+        }
+}
 
+@Composable
+fun MainContent(data: WeatherResponse) {
+        Text(text = data.toString())
 }
