@@ -1,5 +1,6 @@
 package com.example.composeweather.features.screens.main
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -14,9 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.composeweather.data.DataOrException
 import com.example.composeweather.features.common.widgets.WeatherAppBar
 import com.example.composeweather.model.WeatherResponse
+import com.example.composeweather.utils.formatDate
 
 
 @Composable
@@ -25,7 +28,7 @@ fun MainScreen(
         mainScreenViewModel: MainScreenViewModel = hiltViewModel()) {
         val weatherData =produceState<DataOrException<WeatherResponse,Boolean,Exception>>(
                 initialValue =DataOrException(isLoading = true)){
-                value = mainScreenViewModel.getWeatherData("London")
+                value = mainScreenViewModel.getWeatherData("istanbul")
         }.value
 
         if(weatherData.isLoading == true){
@@ -50,33 +53,52 @@ fun MainScaffold(weatherResponse: WeatherResponse,
 
 @Composable
 fun MainContent(data: WeatherResponse) {
+    val imageURL = "https://openweathermap.org/img/wn/${data.weather[0].icon}.png"
        Column(modifier = Modifier
-               .padding(4.dp)
-               .fillMaxWidth(),
+           .padding(4.dp)
+           .fillMaxWidth(),
        verticalArrangement = Arrangement.Center,
        horizontalAlignment = Alignment.CenterHorizontally) {
 
-               Text(text = "Temperature: ${data.main.temp}",
+               Text(text = formatDate(data.dt),
                style = MaterialTheme.typography.caption,
                color = MaterialTheme.colors.onSecondary,
                fontWeight = FontWeight.Bold,
                modifier = Modifier.padding(4.dp))
                
                
-               Surface(modifier = Modifier.padding(4.dp).size(200.dp),
+               Surface(modifier = Modifier
+                   .padding(4.dp)
+                   .size(200.dp),
                        shape = CircleShape,
-               color = Color.Green) {
+               color = Color(0xFFFFC400)) {
 
                        Column(
                                verticalArrangement = Arrangement.Center,
                                horizontalAlignment = Alignment.CenterHorizontally) {
-                                 Text(text = "Humidity: ${data.main.humidity}",
+
+                           WeatherStateImage(imageURL = imageURL)
+
+                                 Text(text = "Weather: ${data.weather[0].main}",
+                                        style = MaterialTheme.typography.caption,
+                                        color = MaterialTheme.colors.onSecondary,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.padding(4.dp))
+                           Text(text = "${data.main.temp}°C",
                                         style = MaterialTheme.typography.caption,
                                         color = MaterialTheme.colors.onSecondary,
                                         fontWeight = FontWeight.Bold,
                                         modifier = Modifier.padding(4.dp))
 
+
                        }
                }
        }
+}
+
+@Composable
+fun WeatherStateImage(imageURL: String) {
+    Image(painter = rememberImagePainter(imageURL), contentDescription ="weather_image",
+            modifier = Modifier.size(80.dp))
+
 }
