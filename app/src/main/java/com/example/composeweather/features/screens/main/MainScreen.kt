@@ -20,6 +20,7 @@ import com.example.composeweather.features.common.components.WeatherStateImage
 import com.example.composeweather.features.common.widgets.WeatherAppBar
 import com.example.composeweather.model.WeatherResponse
 import com.example.composeweather.utils.formatDate
+import com.example.composeweather.utils.formatDateTime
 
 
 @Composable
@@ -53,14 +54,14 @@ fun MainScaffold(weatherResponse: WeatherResponse,
 
 @Composable
 fun MainContent(data: WeatherResponse) {
-    val imageURL = "https://openweathermap.org/img/wn/${data.weather[0].icon}.png"
+    val imageURL = "https://openweathermap.org/img/wn/${data.list.get(0).weather[0].icon}.png"
        Column(modifier = Modifier
            .padding(4.dp)
            .fillMaxWidth(),
        verticalArrangement = Arrangement.Center,
        horizontalAlignment = Alignment.CenterHorizontally) {
 
-               Text(text = formatDate(data.dt),
+               Text(text = formatDate(data.list[0].dt),
                style = MaterialTheme.typography.caption,
                color = MaterialTheme.colors.onSecondary,
                fontWeight = FontWeight.Bold,
@@ -79,12 +80,12 @@ fun MainContent(data: WeatherResponse) {
 
                            WeatherStateImage(imageURL = imageURL)
 
-                                 Text(text = "Weather: ${data.weather[0].main}",
+                                 Text(text = "Weather: ${data.list[0].weather[0].description}",
                                         style = MaterialTheme.typography.caption,
                                         color = MaterialTheme.colors.onSecondary,
                                         fontWeight = FontWeight.Bold,
                                         modifier = Modifier.padding(4.dp))
-                           Text(text = "${data.main.temp}°C",
+                           Text(text = "${data.list[0].main.temp}°C",
                                         style = MaterialTheme.typography.caption,
                                         color = MaterialTheme.colors.onSecondary,
                                         fontWeight = FontWeight.Bold,
@@ -97,7 +98,33 @@ fun MainContent(data: WeatherResponse) {
                }
            HumidityWindPressureRow(data = data)
            Divider()
+           SunSetSunRiseRow(data = data)
        }
+}
+
+@Composable
+fun SunSetSunRiseRow(data: WeatherResponse) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 15.dp, bottom = 5.dp),
+    horizontalArrangement = Arrangement.SpaceBetween) {
+
+        Row() {
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Sunrise",
+                    modifier = Modifier.padding(4.dp))
+
+            Text(text = formatDateTime(data.city.sunrise),
+                style = MaterialTheme.typography.caption)
+        }
+        Row() {
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Sunset",
+                    modifier = Modifier.padding(4.dp))
+
+
+            Text(text = formatDateTime(data.city.sunrise),
+            style = MaterialTheme.typography.caption)
+        }
+    }
 }
 
 @Composable
@@ -113,19 +140,19 @@ fun HumidityWindPressureRow(data: WeatherResponse) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Humidity",
                     modifier = Modifier.size(20.dp))
 
-            Text(text = "${data.main.humidity}%")
+            Text(text = "${data.list[0].main.humidity}%")
         }
         Row(modifier = Modifier.padding(4.dp)) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Feels like",
                 modifier = Modifier.size(20.dp))
 
-            Text(text = "${data.main.feels_like}%")
+            Text(text = "${data.list[0].main.feels_like}%")
         }
         Row(modifier = Modifier.padding(4.dp)) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Pressure",
                 modifier = Modifier.size(20.dp))
 
-            Text(text = "${data.main.pressure}%")
+            Text(text = "${data.list[0].main.pressure}%")
         }
 
     }

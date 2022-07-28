@@ -8,9 +8,9 @@ import javax.inject.Singleton
 
 @Singleton
 interface WeatherAPI {
-    @GET("data/2.5/weather")
+    @GET("data/2.5/forecast")
     suspend fun getWeather(
         @Query("q") city: String,
-        @Query("unit") unit: String = "metric",
+        @Query("units") unit: String = "metric",
         @Query("appid") appid: String = Constants.API_KEY): WeatherResponse
 }
