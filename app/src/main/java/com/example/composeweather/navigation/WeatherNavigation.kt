@@ -20,7 +20,7 @@ fun WeatherNavigation() {
         composable(WeatherScreens.SplashScreen.name) {
             WeatherSplashScreen(navController = navController)
         }
-        //www.google.com/cityname="seattle"
+
         val route = WeatherScreens.MainScreen.name
         composable("$route/{city}",
             arguments = listOf(
@@ -37,7 +37,7 @@ fun WeatherNavigation() {
 
         }
         composable(WeatherScreens.SearchScreen.name) {
-          //  val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
+          //val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
             SearchScreen(navController = navController)
         }
     }

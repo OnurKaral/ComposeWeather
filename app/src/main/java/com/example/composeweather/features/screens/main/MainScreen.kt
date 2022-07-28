@@ -65,7 +65,7 @@ fun MainScaffold(weatherResponse: WeatherResponse,
 
 @Composable
 fun MainContent(data: WeatherResponse) {
-    val imageURL = "https://openweathermap.org/img/wn/${data.list.get(0).weather[0].icon}.png"
+    val imageURL = "https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}.png"
        Column(modifier = Modifier
            .padding(4.dp)
            .fillMaxWidth(),
