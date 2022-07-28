@@ -25,6 +25,7 @@ import com.example.composeweather.features.common.widgets.WeatherAppBar
 import com.example.composeweather.features.common.widgets.WeatherRow
 import com.example.composeweather.model.WeatherMain
 import com.example.composeweather.model.WeatherResponse
+import com.example.composeweather.navigation.WeatherScreens
 import com.example.composeweather.utils.formatDate
 import com.example.composeweather.utils.formatDateTime
 
@@ -52,6 +53,9 @@ fun MainScaffold(weatherResponse: WeatherResponse,
         Scaffold(topBar = {
                 WeatherAppBar("London",navController = navController,
                         icon = Icons.Default.ArrowBack,
+                        onAddActionClicked = {
+                                navController.navigate(WeatherScreens.SearchScreen.name)
+                        },
                 elevation = 3.dp)
         }) {
                 MainContent(data = weatherResponse)
