@@ -1,6 +1,5 @@
 package com.example.composeweather.features.screens.main
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -16,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
 import com.example.composeweather.data.DataOrException
+import com.example.composeweather.features.common.components.WeatherStateImage
 import com.example.composeweather.features.common.widgets.WeatherAppBar
 import com.example.composeweather.model.WeatherResponse
 import com.example.composeweather.utils.formatDate
@@ -135,9 +134,4 @@ fun HumidityWindPressureRow(data: WeatherResponse) {
 
 }
 
-@Composable
-fun WeatherStateImage(imageURL: String) {
-    Image(painter = rememberImagePainter(imageURL), contentDescription ="weather_image",
-            modifier = Modifier.size(80.dp))
 
-}
