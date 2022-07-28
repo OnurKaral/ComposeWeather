@@ -27,24 +27,34 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.composeweather.features.common.widgets.WeatherAppBar
+import com.example.composeweather.navigation.WeatherScreens
 
 @Composable
 fun SearchScreen(navController: NavController) {
     Scaffold(topBar = {
-        WeatherAppBar(navController = navController, title = "Search",
-        icon = Icons.Default.ArrowBack,
-        isMainScreen = false){
+        WeatherAppBar(
+            title = "Search",
+            navController = navController,
+            icon = Icons.Default.ArrowBack,
+            isMainScreen = false,
+        ){
             navController.popBackStack()
         }
     }) {
         Surface() {
             Column(verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-                SearchBar()
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                SearchBar(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally)){ mCity ->
+                    navController.navigate(WeatherScreens.MainScreen.name + "/$mCity")
+                }
             }
         }
     }
 }
+
 @ExperimentalComposeUiApi
 @Composable
 fun SearchBar(

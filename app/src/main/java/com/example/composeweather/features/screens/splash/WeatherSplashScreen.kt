@@ -38,7 +38,8 @@ fun WeatherSplashScreen(navController: NavController) {
             OvershootInterpolator(8f).getInterpolation(it)
         }))
         delay(2000L)
-        navController.navigate(WeatherScreens.MainScreen.name)
+        val defaultCity = "Istanbul"
+        navController.navigate(WeatherScreens.MainScreen.name +"/$defaultCity")
     })
 
     Surface(modifier = Modifier

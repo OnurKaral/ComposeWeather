@@ -27,16 +27,17 @@ import com.example.composeweather.model.WeatherMain
 import com.example.composeweather.model.WeatherResponse
 import com.example.composeweather.navigation.WeatherScreens
 import com.example.composeweather.utils.formatDate
-import com.example.composeweather.utils.formatDateTime
 
 
 @Composable
 fun MainScreen(
-        navController: NavHostController,
-        mainScreenViewModel: MainScreenViewModel = hiltViewModel()) {
+    navController: NavHostController,
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
+    city: String?
+) {
         val weatherData =produceState<DataOrException<WeatherResponse,Boolean,Exception>>(
                 initialValue =DataOrException(isLoading = true)){
-                value = mainScreenViewModel.getWeatherData("istanbul")
+                value = mainScreenViewModel.getWeatherData(city.toString())
         }.value
 
         if(weatherData.isLoading == true){
@@ -51,7 +52,7 @@ fun MainScreen(
 fun MainScaffold(weatherResponse: WeatherResponse,
                  navController: NavHostController){
         Scaffold(topBar = {
-                WeatherAppBar("London",navController = navController,
+                WeatherAppBar(weatherResponse.city.name,navController = navController,
                         icon = Icons.Default.ArrowBack,
                         onAddActionClicked = {
                                 navController.navigate(WeatherScreens.SearchScreen.name)
