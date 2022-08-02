@@ -7,9 +7,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.composeweather.features.screens.about.AboutScreen
+import com.example.composeweather.features.screens.favorites.FavoriteScreen
 import com.example.composeweather.features.screens.main.MainScreen
 import com.example.composeweather.features.screens.main.MainScreenViewModel
 import com.example.composeweather.features.screens.search.SearchScreen
+import com.example.composeweather.features.screens.settings.SettingsScreen
 import com.example.composeweather.screens.WeatherSplashScreen
 
 @Composable
@@ -39,6 +42,15 @@ fun WeatherNavigation() {
         composable(WeatherScreens.SearchScreen.name) {
           //val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
             SearchScreen(navController = navController)
+        }
+        composable(WeatherScreens.AboutScreen.name) {
+            AboutScreen(navController = navController)
+        }
+        composable(WeatherScreens.SettingsScreen.name) {
+            SettingsScreen(navController = navController)
+        }
+        composable(WeatherScreens.FavoriteScreen.name) {
+            FavoriteScreen(navController = navController)
         }
     }
 }
