@@ -6,7 +6,7 @@ import com.example.composeweather.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FavoritesDao {
+interface WeatherAppDao {
     @Query("SELECT * FROM favorite_tbl")
     fun getFavorites(): Flow<List<Favorite>>
 
