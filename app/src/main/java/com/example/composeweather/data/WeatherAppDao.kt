@@ -1,7 +1,6 @@
 package com.example.composeweather.data
 
 import androidx.room.*
-import com.example.composeweather.model.City
 import com.example.composeweather.model.Favorite
 import kotlinx.coroutines.flow.Flow
 
