@@ -23,5 +23,5 @@ interface WeatherAppDao {
     suspend fun deleteFavorite(favorite: Favorite)
 
     @Query("DELETE FROM favorite_tbl")
-    suspend fun deleteAllFavorite()
+    suspend fun deleteAllFavorites()
 }
